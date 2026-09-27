@@ -1,1 +1,49 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create account · Jovia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="narrow">
+    <div class="card">
+      <div class="logo" style="justify-content:center">JOVIA <span>NETWORK</span></div>
+      <h1 style="text-align:center">Create account</h1>
+      <p class="muted" style="text-align:center">Join Jovia Network — choose Silver or Gold</p>
+      <form onsubmit="registerForm(event)">
+        <label>Full name <input name="fullName" required /></label>
+        <label>Username <input name="username" required /></label>
+        <label>Email <input name="email" type="email" required /></label>
+        <label>Phone number <input name="phone" required /></label>
+        <label>Country
+          <select name="country">
+            <option>Nigeria</option><option>Ghana</option><option>Kenya</option>
+            <option>South Africa</option><option>United Kingdom</option>
+            <option>United States</option><option>Canada</option><option>Other</option>
+          </select>
+        </label>
+        <label>Password <input id="pw" name="password" type="password" required minlength="8" /></label>
+        <button type="button" class="ghost-btn" onclick="togglePass('pw')">Show / hide password</button>
+        <label>Confirm password <input id="pw2" name="confirm" type="password" required minlength="8" /></label>
+        <h2>Select your plan</h2>
+        <div class="grid2">
+          <button type="button" class="plan" id="p-silver" onclick="document.querySelector('[name=plan][value=silver]').checked=true; this.classList.add('selected'); document.getElementById('p-gold').classList.remove('selected')">
+            <h3>Silver</h3><p class="amount" style="font-size:28px">₦9,000</p><p class="ok">Cashback ₦9,000 ($9)</p>
+          </button>
+          <button type="button" class="plan" id="p-gold" onclick="document.querySelector('[name=plan][value=gold]').checked=true; this.classList.add('selected'); document.getElementById('p-silver').classList.remove('selected')">
+            <h3>Gold</h3><p class="amount" style="font-size:28px">₦15,000</p><p class="ok">Cashback ₦15,000 ($15)</p>
+          </button>
+        </div>
+        <input type="radio" name="plan" value="silver" class="hidden" />
+        <input type="radio" name="plan" value="gold" class="hidden" />
+        <p id="error" class="err"></p>
+        <button class="gold-btn" type="submit">Create account</button>
+      </form>
+      <p class="muted" style="text-align:center;margin-top:18px">Already have an account? <a href="login.html">Login</a></p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
