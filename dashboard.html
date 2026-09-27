@@ -1,1 +1,47 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard · Jovia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="narrow">
+    <div class="row">
+      <div class="logo">JOVIA <span>NETWORK</span></div>
+      <button class="ghost-btn" style="width:auto" onclick="signOut()">Sign out</button>
+    </div>
+    <p class="muted">Welcome back</p>
+    <h1 id="name">Member</h1>
+    <div class="card">
+      <p id="status" class="lock">NOT ACTIVATED</p>
+      <p>Selected plan: <strong id="plan">—</strong></p>
+      <p>Cash back: <strong class="ok" id="cashback">—</strong> after activation</p>
+      <p class="muted">Features stay locked until an administrator verifies your payment.</p>
+      <p><a class="gold-btn" href="activation.html">Activate now</a></p>
+    </div>
+    <div class="bal">
+      <p class="muted">Available balance</p>
+      <p class="amount" id="balance">₦0</p>
+      <div class="grid2">
+        <a class="gold-btn" href="activation.html">Activate</a>
+        <button class="ghost-btn" type="button">Withdraw</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <p class="muted">Your referral link</p>
+      <p id="ref" style="word-break:break-all"></p>
+    </div>
+  </div>
+  <nav class="nav">
+    <a class="active" href="dashboard.html">Home</a>
+    <a href="dashboard.html">Earn</a>
+    <a href="dashboard.html">Wallet</a>
+    <a href="dashboard.html">History</a>
+    <a href="dashboard.html">Profile</a>
+  </nav>
+  <script src="script.js"></script>
+  <script>renderDashboard();</script>
+</body>
+</html>
