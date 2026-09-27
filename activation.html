@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Activation · Jovia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="narrow">
+    <div class="row">
+      <div class="logo">JOVIA <span>NETWORK</span></div>
+      <a class="muted" href="dashboard.html">Back</a>
+    </div>
 
+    <div id="active-box" class="card hidden" style="text-align:center">
+      <h1 class="ok">Account activated</h1>
+      <p class="muted">Your plan is live. Cashback is on your dashboard.</p>
+      <a class="gold-btn" href="dashboard.html">Go to dashboard</a>
+    </div>
+
+    <div id="plan-box" class="card" style="text-align:center">
+      <p class="badge">Jovia activation</p>
+      <h1>Activate Your Account</h1>
+      <p class="badge" data-plan-name>PLAN</p>
+      <p id="pending-note" class="hidden muted">A previous payment proof is still pending administrator review. You can repeat the steps below. This does not activate your account.</p>
+      <p class="muted">Unlock full access after administrator verification.</p>
+      <p class="amount" data-plan-amount>₦0</p>
+      <p class="muted">Amount to pay · <span data-plan-both></span></p>
+      <button class="violet-btn" type="button" onclick="goPay()">Activate Now →</button>
+      <a class="ghost-btn" href="dashboard.html" style="margin-top:10px">Maybe Later</a>
+    </div>
+
+    <div id="pay-box" class="card hidden" style="text-align:center">
+      <h1>SECURE PAYMENT</h1>
+      <p class="muted">Complete your activation payment</p>
+      <p>Plan: <strong data-plan-name></strong></p>
+      <p class="amount" data-plan-amount>₦0</p>
+      <p class="muted">Amount to pay · <span data-plan-both></span></p>
+      <p class="muted">Payment time remaining</p>
+      <p class="timer" id="timer">05:00</p>
+      <p class="muted">Transfer the exact plan amount to either account below. Use your payment reference as narration.</p>
+      <p id="pay-ref" class="ok"></p>
+      <div id="accounts"></div>
+      <p id="copied" class="ok hidden"></p>
+      <p id="error" class="err"></p>
+      <button class="violet-btn" type="button" onclick="madePayment()">I HAVE MADE PAYMENT</button>
+      <div class="pay-acc">
+        <p class="badge">Submit payment proof</p>
+        <p class="muted">After transferring, upload your receipt screenshot. This does not unlock the account.</p>
+        <form onsubmit="submitProof(event)">
+          <input id="proof" type="file" accept="image/*" />
+          <button class="ghost-btn" type="submit" style="margin-top:10px">SUBMIT PAYMENT PROOF</button>
+        </form>
+      </div>
+      <p class="muted">This does not activate your account. Proof still needs admin review.</p>
+    </div>
+  </div>
+
+  <div id="overlay" class="hidden" style="position:fixed;inset:0;background:rgb(11 6 20 / .8);display:grid;place-items:center;padding:16px">
+    <div class="card" style="max-width:360px;text-align:center">
+      <h2>Verification In Progress</h2>
+      <p class="ok">Status: PENDING VERIFICATION</p>
+      <p class="muted">Submitting proof does not activate the account. An administrator must confirm the transfer.</p>
+      <button class="violet-btn" type="button" onclick="telegramProof()">SEND PAYMENT PROOF</button>
+      <button class="ghost-btn" type="button" style="margin-top:10px" onclick="document.getElementById('overlay').classList.add('hidden')">Close</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>renderActivation();</script>
+</body>
+</html>
