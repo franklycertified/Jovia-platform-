@@ -1,1 +1,42 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login · Jovia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="narrow">
+    <div class="card">
+      <div class="logo" style="justify-content:center">JOVIA <span>NETWORK</span></div>
+      <div id="login-box">
+        <h1 style="text-align:center">Welcome back</h1>
+        <p class="muted" style="text-align:center">Login to your Jovia dashboard</p>
+        <form onsubmit="loginForm(event)">
+          <label>Email <input name="email" type="email" required /></label>
+          <label>Password <input id="pw" name="password" type="password" required /></label>
+          <button type="button" class="ghost-btn" onclick="togglePass('pw')">Show / hide password</button>
+          <p id="error" class="err"></p>
+          <p id="ok" class="ok"></p>
+          <button class="gold-btn" type="submit">Login</button>
+        </form>
+        <p style="text-align:center"><button class="ghost-btn" type="button" onclick="document.getElementById('login-box').classList.add('hidden'); document.getElementById('reset-box').classList.remove('hidden')">Forgot Password?</button></p>
+        <p class="muted" style="text-align:center">New here? <a href="register.html">Create account</a></p>
+      </div>
+      <div id="reset-box" class="hidden">
+        <h1 style="text-align:center">Reset password</h1>
+        <form onsubmit="resetForm(event)">
+          <label>Email <input name="email" type="email" required /></label>
+          <label>Username <input name="username" required /></label>
+          <label>New password <input name="newPassword" type="password" required minlength="8" /></label>
+          <label>Confirm <input name="confirm" type="password" required minlength="8" /></label>
+          <button class="violet-btn" type="submit">Update password</button>
+        </form>
+        <p style="text-align:center"><a href="login.html">Back to login</a></p>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
