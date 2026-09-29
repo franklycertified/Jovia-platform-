@@ -34,6 +34,63 @@ function togglePass(id) {
   el.type = el.type === "password" ? "text" : "password";
 }
 
+function pickPlan(id) {
+  const radio = document.querySelector("[name=plan][value='" + id + "']");
+  if (radio) radio.checked = true;
+  document.getElementById("p-silver")?.classList.toggle("selected", id === "silver");
+  document.getElementById("p-gold")?.classList.toggle("selected", id === "gold");
+}
+
+function showTab(id) {
+  ["home", "earn", "wallet", "history", "profile"].forEach((t) => {
+    document.getElementById("tab-" + t)?.classList.toggle("hidden", t !== id);
+  });
+  document.querySelectorAll(".nav button").forEach((b) => {
+    b.classList.toggle("active", b.textContent.trim().toLowerCase() === id);
+  });
+}
+
+const MODULES = [
+  "Celebrity videos", "Fun games", "Music", "Easy Buy", "Meta",
+  "Skill Verse", "Friday FBR", "Debit card", "Jovia AI",
+];
+
+function fillModules(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  box.innerHTML = MODULES.map((title) =>
+    `<button class="card mod" type="button"><small>LOCKED</small><div>${title}</div></button>`
+  ).join("");
+}
+
+function startFeed() {
+  const el = document.getElementById("toast");
+  if (!el) return;
+  const people = [
+    ["Michael", "mike_lagos", "Lagos, Nigeria", "received cash back from Jovia"],
+    ["Grace", "grace_abj", "Abuja, Nigeria", "completed a celebrity video session"],
+    ["David", "david_ph", "Port Harcourt, Nigeria", "received cash back from Jovia"],
+    ["Sarah", "sarah_enugu", "Enugu, Nigeria", "finished a games countdown"],
+    ["Chinedu", "chinedu_ib", "Ibadan, Nigeria", "received a music streaming reward"],
+    ["Amaka", "amaka_onitsha", "Onitsha, Nigeria", "completed an Easy Buy upload"],
+    ["Fatima", "fatima_kano", "Kano, Nigeria", "received cash back from Jovia"],
+    ["Kevin", "kevin_nbo", "Nairobi, Kenya", "received a games payout"],
+    ["Daniel", "daniel_accra", "Accra, Ghana", "completed a celebrity video session"],
+    ["Victor", "victor_ldn", "London, United Kingdom", "received cash back from Jovia"],
+  ];
+  const times = ["just now", "2 minutes ago", "5 minutes ago", "8 minutes ago", "12 minutes ago"];
+  function next() {
+    const p = people[Math.floor(Math.random() * people.length)];
+    const t = times[Math.floor(Math.random() * times.length)];
+    el.innerHTML = `<b>Platform activity feed</b><p><strong>${p[0]} (@${p[1]})</strong> from ${p[2]}</p><p>${p[3]}</p><p>${t}</p>`;
+    el.classList.remove("hidden");
+    setTimeout(() => el.classList.add("hidden"), 3400);
+    setTimeout(next, 4000 + Math.floor(Math.random() * 7000));
+  }
+  setTimeout(next, 1200);
+}
+
+
 function registerForm(e) {
   e.preventDefault();
   const f = Object.fromEntries(new FormData(e.target).entries());
@@ -101,6 +158,17 @@ function renderDashboard() {
   document.getElementById("status").textContent = u.activated ? "ACCOUNT ACTIVATED" : (u.paymentStatus === "pending" ? "PENDING VERIFICATION" : "NOT ACTIVATED");
   document.getElementById("status").className = u.activated ? "ok" : "lock";
   document.getElementById("ref").textContent = location.origin + "/register.html?ref=" + encodeURIComponent(u.username);
+  fillModules("modules");
+  fillModules("modules-earn");
+  const b2 = document.getElementById("balance2");
+  if (b2) b2.textContent = money(p.cashback);
+  const pn = document.getElementById("pname");
+  if (pn) {
+    pn.textContent = u.fullName;
+    document.getElementById("puser").textContent = u.username;
+    document.getElementById("pplan").textContent = p.name.toUpperCase();
+    document.getElementById("pstatus").textContent = document.getElementById("status").textContent;
+  }
 }
 
 let selectedAcc = null;

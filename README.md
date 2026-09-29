@@ -1,15 +1,17 @@
 # Jovia Network
 
-Watch. Play. Earn with Jovia.
+This is the complete Jovia website: home page, registration, login, dashboard, activation, images, and videos.
+
+Open `index.html` in a browser, or enable GitHub Pages on this repository.
 
 ## Pages
-- `index.html` — Home
+- `index.html` — Home (plans, features, videos, Telegram, FAQ)
 - `register.html` — Create account and select Silver or Gold
 - `login.html` — Login and forgot password
-- `dashboard.html` — Plan, balance, and referral link
+- `dashboard.html` — Plan, balance, modules, videos, referral link
 - `activation.html` — Payment details and payment-proof upload
-- `script.js`
-- `style.css`
+- `script.js` / `style.css`
+- `images/` and `videos/`
 
 ## Plans
 - Silver: ₦9,000

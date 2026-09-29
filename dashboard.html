@@ -7,41 +7,80 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="narrow">
-    <div class="row">
-      <div class="logo">JOVIA <span>NETWORK</span></div>
+  <header class="topbar">
+    <div class="topbar-inner" style="max-width:520px">
+      <a class="logo" href="dashboard.html">
+        <svg viewBox="0 0 48 36" aria-hidden="true"><path d="M8 22c0-8 6-14 14-14 4 0 7 1.4 9.5 3.8L38 6c-3.6-3.7-8.6-6-14.5-6C11.3 0 2 9.4 2 22c0 6.2 2.4 11.4 6.3 15.2L14 31.4C10.4 28.5 8 25.5 8 22Zm20.2-7.4c2.2 2 3.5 4.6 3.5 7.6 0 6.4-5.1 11.6-11.4 11.6-2.2 0-4.2-.6-5.9-1.7L9.2 38C12.5 40.6 16.6 42 21 42c11.6 0 21-9.4 21-21 0-5.3-2-10.1-5.3-13.8l-8.5 7.4Z" fill="#F5C518"/></svg>
+        <span><b>Jovia</b><small>Network</small></span>
+      </a>
       <button class="ghost-btn" style="width:auto" onclick="signOut()">Sign out</button>
     </div>
-    <p class="muted">Welcome back</p>
-    <h1 id="name">Member</h1>
-    <div class="card">
-      <p id="status" class="lock">NOT ACTIVATED</p>
-      <p>Selected plan: <strong id="plan">—</strong></p>
-      <p>Cash back: <strong class="ok" id="cashback">—</strong> after activation</p>
-      <p class="muted">Features stay locked until an administrator verifies your payment.</p>
-      <p><a class="gold-btn" href="activation.html">Activate now</a></p>
-    </div>
-    <div class="bal">
-      <p class="muted">Available balance</p>
-      <p class="amount" id="balance">₦0</p>
-      <div class="grid2">
-        <a class="gold-btn" href="activation.html">Activate</a>
-        <button class="ghost-btn" type="button">Withdraw</button>
+  </header>
+
+  <div class="narrow">
+    <div id="tab-home">
+      <p class="muted">Welcome back</p>
+      <h1 id="name">Member</h1>
+      <div class="card">
+        <p id="status" class="lock">NOT ACTIVATED</p>
+        <p>Selected plan: <strong id="plan">—</strong></p>
+        <p>Cash back: <strong class="ok" id="cashback">—</strong> after activation</p>
+        <p class="muted">Features stay locked until an administrator verifies your payment.</p>
+        <p><a class="gold-btn" href="activation.html">Activate now</a></p>
+      </div>
+      <div class="bal">
+        <p class="muted">Available balance</p>
+        <p class="amount" id="balance">₦0</p>
+        <div class="grid2">
+          <a class="gold-btn" href="activation.html">Activate</a>
+          <button class="ghost-btn" type="button" onclick="showTab('wallet')">Withdraw</button>
+        </div>
+      </div>
+      <h2 style="margin-top:22px">Earn modules</h2>
+      <div class="modules" id="modules"></div>
+      <h2 style="margin-top:22px">Jovia videos</h2>
+      <div class="vwrap"><video src="videos/celebrity.mp4" muted playsinline preload="metadata"></video><p>Training Video · Locked until activation</p></div>
+      <div class="vwrap"><video src="videos/games.mp4" muted playsinline preload="metadata"></video><p>How It Works · Locked until activation</p></div>
+      <div class="card" style="margin-top:16px">
+        <p class="muted">Your referral link</p>
+        <p id="ref" style="word-break:break-all"></p>
       </div>
     </div>
-    <div class="card" style="margin-top:16px">
-      <p class="muted">Your referral link</p>
-      <p id="ref" style="word-break:break-all"></p>
+
+    <div id="tab-earn" class="hidden">
+      <h1>Earn</h1>
+      <p class="muted">Modules stay locked until an administrator verifies payment.</p>
+      <div class="modules" id="modules-earn"></div>
+    </div>
+    <div id="tab-wallet" class="hidden">
+      <h1>Wallet</h1>
+      <div class="bal"><p class="muted">Available balance</p><p class="amount" id="balance2">₦0</p></div>
+      <div class="card" style="margin-top:16px"><p class="muted">Withdrawals stay locked until activation. Minimum ₦15,000 ($15).</p></div>
+    </div>
+    <div id="tab-history" class="hidden">
+      <h1>History</h1>
+      <div class="card"><p class="muted" id="history">No cashback has been credited yet. History only shows earnings tied to this account after administrator-verified activation.</p></div>
+    </div>
+    <div id="tab-profile" class="hidden">
+      <h1>Profile</h1>
+      <div class="card">
+        <p>Name: <strong id="pname"></strong></p>
+        <p>Username: <strong id="puser"></strong></p>
+        <p>Plan: <strong id="pplan"></strong></p>
+        <p>Status: <strong id="pstatus"></strong></p>
+      </div>
     </div>
   </div>
+
   <nav class="nav">
-    <a class="active" href="dashboard.html">Home</a>
-    <a href="dashboard.html">Earn</a>
-    <a href="dashboard.html">Wallet</a>
-    <a href="dashboard.html">History</a>
-    <a href="dashboard.html">Profile</a>
+    <button class="active" type="button" onclick="showTab('home')">Home</button>
+    <button type="button" onclick="showTab('earn')">Earn</button>
+    <button type="button" onclick="showTab('wallet')">Wallet</button>
+    <button type="button" onclick="showTab('history')">History</button>
+    <button type="button" onclick="showTab('profile')">Profile</button>
   </nav>
+  <div id="toast" class="toast hidden"></div>
   <script src="script.js"></script>
-  <script>renderDashboard();</script>
+  <script>renderDashboard(); startFeed();</script>
 </body>
 </html>
