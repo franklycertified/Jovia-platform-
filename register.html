@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="narrow">
+  <div class="narrow" style="max-width:760px">
     <div class="card">
       <a class="logo" href="index.html" style="justify-content:center">
         <svg viewBox="0 0 48 36" aria-hidden="true"><path d="M8 22c0-8 6-14 14-14 4 0 7 1.4 9.5 3.8L38 6c-3.6-3.7-8.6-6-14.5-6C11.3 0 2 9.4 2 22c0 6.2 2.4 11.4 6.3 15.2L14 31.4C10.4 28.5 8 25.5 8 22Zm20.2-7.4c2.2 2 3.5 4.6 3.5 7.6 0 6.4-5.1 11.6-11.4 11.6-2.2 0-4.2-.6-5.9-1.7L9.2 38C12.5 40.6 16.6 42 21 42c11.6 0 21-9.4 21-21 0-5.3-2-10.1-5.3-13.8l-8.5 7.4Z" fill="#F5C518"/></svg>
@@ -19,7 +19,7 @@
         <label>Full name <input name="fullName" required /></label>
         <label>Username <input name="username" required /></label>
         <label>Email <input name="email" type="email" required /></label>
-        <label>Phone number <input name="phone" required /></label>
+        <label>Phone number <input name="phone" type="tel" required /></label>
         <label>Country
           <select name="country">
             <option>Nigeria</option><option>Ghana</option><option>Kenya</option>
@@ -27,28 +27,77 @@
             <option>United States</option><option>Canada</option><option>Other</option>
           </select>
         </label>
-        <label>Password <input id="pw" name="password" type="password" required minlength="8" /></label>
-        <button type="button" class="ghost-btn full" onclick="togglePass('pw')">Show / hide password</button>
-        <label>Confirm password <input id="pw2" name="confirm" type="password" required minlength="8" /></label>
+        <label>Password
+          <span class="pw-wrap"><input id="pw" name="password" type="password" required minlength="8" /><button class="eye" type="button" onclick="togglePass('pw')" aria-label="Show password">👁</button></span>
+        </label>
+        <label>Confirm password
+          <span class="pw-wrap"><input id="pw2" name="confirm" type="password" required minlength="8" /><button class="eye" type="button" onclick="togglePass('pw2')" aria-label="Show password">👁</button></span>
+        </label>
         <h2>Select your plan</h2>
+        <p class="muted">Compare Silver and Gold, then tap a card to choose.</p>
         <div class="grid2">
           <button type="button" class="plan" id="p-silver" onclick="pickPlan('silver')">
             <img src="images/1000032047.jpg" alt="Silver">
-            <h3>Silver</h3><p class="amount" style="font-size:28px">₦9,000</p><p class="ok">Cashback ₦9,000 ($9)</p>
+            <h3>Silver</h3>
+            <p class="amount" style="font-size:28px">₦9,000</p>
+            <p class="ok">Cashback ₦9,000 ($9.00)</p>
+            <p class="tiny violet">WHAT YOU GET</p>
+            <ul class="checks">
+              <li>Instant cashback credited to your account</li>
+              <li>Full access to earning modules after activation</li>
+              <li>Referral system unlocked</li>
+              <li>Withdraw earnings once you meet the minimum</li>
+            </ul>
+            <p class="tiny gold">SILVER BENEFITS</p>
+            <ul class="checks">
+              <li>₦9,000 ($9.00) instant cashback / smash bonus</li>
+              <li>Fixed countdown time on videos and games</li>
+              <li>1 second = ₦50 ($0.05)</li>
+              <li>Celebrity videos: ₦1,500 ($1.50) for 30 seconds</li>
+              <li>Fun games: ₦3,000 ($3.00) for 60 seconds</li>
+              <li>Friday Bonus Reward (FBR) not included</li>
+            </ul>
           </button>
           <button type="button" class="plan" id="p-gold" onclick="pickPlan('gold')">
             <img src="images/1000032046.jpg" alt="Gold">
-            <h3>Gold</h3><p class="amount" style="font-size:28px">₦15,000</p><p class="ok">Cashback ₦15,000 ($15)</p>
+            <h3>Gold</h3>
+            <p class="amount" style="font-size:28px">₦15,000</p>
+            <p class="ok">Cashback ₦15,000 ($15.00)</p>
+            <p class="tiny violet">WHAT YOU GET</p>
+            <ul class="checks">
+              <li>Instant cashback credited to your account</li>
+              <li>Full access to earning modules after activation</li>
+              <li>Referral system unlocked</li>
+              <li>Withdraw earnings anytime (after minimum)</li>
+            </ul>
+            <p class="tiny gold">GOLD BENEFITS</p>
+            <ul class="checks">
+              <li>₦15,000 ($15.00) instant cashback / smash bonus</li>
+              <li>Adjustable countdown from 30 seconds up to 1 hour</li>
+              <li>1 second = ₦100 ($0.10)</li>
+              <li>Celebrity videos: ₦3,000 ($3.00) for 30 seconds</li>
+              <li>Fun games: ₦6,000 ($6.00) for 60 seconds</li>
+              <li>Friday Bonus Reward (FBR) — tap $10 every Friday</li>
+              <li>Jovia AI assistant ready to help</li>
+            </ul>
           </button>
         </div>
         <input type="radio" name="plan" value="silver" class="hidden" />
         <input type="radio" name="plan" value="gold" class="hidden" />
         <p id="error" class="err"></p>
-        <button class="gold-btn full" type="submit">Create account</button>
+        <button class="gold-btn full" type="submit" id="reg-btn">Select a plan to continue</button>
       </form>
-      <p class="muted" style="text-align:center;margin-top:18px">Already have an account? <a href="login.html">Login</a></p>
+      <p class="muted" style="text-align:center;margin-top:18px">Already have an account? <a href="login.html" style="color:var(--primary);font-weight:700">Login</a></p>
     </div>
   </div>
   <script src="script.js"></script>
+  <script>
+    const _pick = pickPlan;
+    pickPlan = function(id) {
+      _pick(id);
+      const b = document.getElementById("reg-btn");
+      if (b) b.textContent = "Create " + id + " account";
+    };
+  </script>
 </body>
 </html>

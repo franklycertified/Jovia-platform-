@@ -297,6 +297,15 @@ function renderActivation() {
     document.getElementById("plan-box").classList.add("hidden");
   }
   if (u.paymentStatus === "pending") document.getElementById("pending-note")?.classList.remove("hidden");
+  const details = document.getElementById("act-details");
+  if (details) {
+    details.innerHTML = `<p class="tiny violet">WHAT YOU GET AFTER ACTIVATION</p><ul class="checks">${(p.benefits ? [
+      "Instant cashback credited to your account",
+      "Full access to earning modules after activation",
+      "Referral system unlocked",
+      "Withdraw earnings once you meet the minimum",
+    ] : []).map((h)=>`<li>${h}</li>`).join("")}</ul><p class="tiny gold">${p.name.toUpperCase()} BENEFITS</p><ul class="checks">${p.benefits.map((h)=>`<li>${h}</li>`).join("")}</ul>`;
+  }
   payRef = "JOV-" + p.name.toUpperCase() + "-" + Date.now().toString(36).toUpperCase().slice(-6);
 }
 
