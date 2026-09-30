@@ -127,7 +127,7 @@ function startFeed(kind) {
   const el = document.getElementById("toast");
   if (!el) return;
   el.classList.add(kind === "dash" ? "dash" : "home");
-  const people = [
+  const earnings = [
     ["Michael", "mike_lagos", "Lagos", "Nigeria", "received cash back from Jovia"],
     ["Grace", "grace_abj", "Abuja", "Nigeria", "completed a celebrity video session"],
     ["David", "david_ph", "Port Harcourt", "Nigeria", "received cash back from Jovia"],
@@ -141,6 +141,23 @@ function startFeed(kind) {
     ["Blessing", "blessing_benin", "Benin City", "Nigeria", "completed an Easy Buy upload"],
     ["Linda", "linda_mcr", "Manchester", "United Kingdom", "completed a celebrity video session"],
   ];
+  const joins = [
+    ["Kemi", "kemi_lagos", "Lagos", "Nigeria", "just joined Jovia Network"],
+    ["Tobi", "tobi_ibadan", "Ibadan", "Nigeria", "joined Jovia on the Silver plan"],
+    ["Ada", "ada_enugu", "Enugu", "Nigeria", "activated their Jovia account"],
+    ["James", "james_ph", "Port Harcourt", "Nigeria", "activated the Gold plan"],
+    ["Nneka", "nneka_abuja", "Abuja", "Nigeria", "just joined Jovia Network"],
+    ["Oscar", "oscar_kano", "Kano", "Nigeria", "joined Jovia on the Gold plan"],
+    ["Funke", "funke_benin", "Benin City", "Nigeria", "activated the Silver plan"],
+    ["Chika", "chika_owerri", "Owerri", "Nigeria", "activated their Jovia account"],
+    ["Daniel", "daniel_accra", "Accra", "Ghana", "just joined Jovia Network"],
+    ["Kevin", "kevin_nbo", "Nairobi", "Kenya", "joined Jovia on the Gold plan"],
+    ["Victor", "victor_ldn", "London", "United Kingdom", "just joined Jovia Network"],
+    ["Linda", "linda_mcr", "Manchester", "United Kingdom", "activated the Gold plan"],
+    ["Ruth", "ruth_ilorin", "Ilorin", "Nigeria", "just joined Jovia Network"],
+    ["Blessing", "blessing_uyo", "Uyo", "Nigeria", "activated the Gold plan"],
+  ];
+  const people = kind === "dash" ? earnings : joins;
   const times = ["just now", "2 minutes ago", "5 minutes ago", "8 minutes ago", "12 minutes ago"];
   function next() {
     const p = people[Math.floor(Math.random() * people.length)];
