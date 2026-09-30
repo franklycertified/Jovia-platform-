@@ -294,7 +294,6 @@ function renderActivation() {
   document.querySelectorAll("[data-plan-both]").forEach((n) => n.textContent = both(p.amount));
   if (u.activated) {
     document.getElementById("active-box").classList.remove("hidden");
-    document.getElementById("plan-box").classList.add("hidden");
   }
   if (u.paymentStatus === "pending") document.getElementById("pending-note")?.classList.remove("hidden");
   const details = document.getElementById("act-details");
@@ -318,7 +317,7 @@ function goPay() {
   const p = PLANS[u.plan];
   box.innerHTML = ACCOUNTS.map((a) => `
     <div class="pay-acc" id="acc-${a.id}">
-      <div class="row"><strong class="badge">${a.label}</strong><button type="button" class="ghost-btn" style="width:auto;padding:6px 12px" onclick="selectAcc('${a.id}')">Select</button></div>
+      <p class="badge">${a.label}</p>
       <p style="font-weight:800;margin:8px 0 0">${a.method}</p>
       <button class="acc-no" type="button" onclick="copyText('${a.number}','${a.id}')">${a.number}</button>
       <p style="font-weight:800;text-transform:uppercase">${a.name}</p>
@@ -329,57 +328,66 @@ function goPay() {
   startPayTimer();
 }
 
-function selectAcc(id) {
-  selectedAcc = id;
-  ACCOUNTS.forEach((a) => document.getElementById("acc-" + a.id)?.classList.toggle("selected", a.id === id));
-  document.getElementById("error").textContent = "";
-}
-
 function copyText(v, id) {
+  selectedAcc = id;
   navigator.clipboard.writeText(v).then(() => {
     document.getElementById("copied").textContent = "Account number copied!";
     document.getElementById("copied").classList.remove("hidden");
-    selectAcc(id);
   }).catch(() => {
     document.getElementById("error").textContent = "Could not copy. Long-press the account number instead.";
   });
 }
 
 function madePayment() {
-  if (!selectedAcc) { document.getElementById("error").textContent = "Select Moniepoint or PalmPay to continue."; return; }
-  updateUser({ paymentStatus: "pending" });
+  const u = current();
+  if (!u.activated && u.paymentStatus !== "pending") {
+    updateUser({ paymentStatus: "pending", activated: false });
+  } else if (!u.activated) {
+    updateUser({ paymentStatus: "pending", activated: false });
+  }
   document.getElementById("error").textContent = "";
-  document.getElementById("copied").textContent = "Payment recorded as pending. Upload proof below. This does not activate your account.";
-  document.getElementById("copied").classList.remove("hidden");
-}
-
-function submitProof(e) {
-  e.preventDefault();
-  const err = document.getElementById("error");
-  if (!selectedAcc) { err.textContent = "Select Moniepoint or PalmPay first."; return; }
-  const file = document.getElementById("proof").files[0];
-  if (!file) { err.textContent = "Upload your payment receipt screenshot."; return; }
-  const reader = new FileReader();
-  reader.onload = () => {
-    const u = current();
-    const proofs = u.proofs || [];
-    proofs.push({
-      at: new Date().toISOString(),
-      account: selectedAcc,
-      reference: payRef,
-      name: file.name,
-      data: String(reader.result).slice(0, 200000),
-    });
-    updateUser({ paymentStatus: "pending", activated: false, proofs });
-    document.getElementById("overlay").classList.remove("hidden");
-  };
-  reader.readAsDataURL(file);
+  document.getElementById("overlay").classList.remove("hidden");
+  document.getElementById("count-box").classList.remove("hidden");
+  document.getElementById("proof-box").classList.add("hidden");
+  let n = 10;
+  const el = document.getElementById("count");
+  el.textContent = "10";
+  const tick = setInterval(() => {
+    n -= 1;
+    el.textContent = String(Math.max(0, n));
+    if (n < 0) {
+      clearInterval(tick);
+      document.getElementById("count-box").classList.add("hidden");
+      document.getElementById("proof-box").classList.remove("hidden");
+      const p = PLANS[current().plan];
+      document.getElementById("proof-plan").textContent = "Plan " + p.name + " · " + money(p.amount);
+    }
+  }, 1000);
 }
 
 function telegramProof() {
   const u = current();
   const p = PLANS[u.plan];
-  const acc = ACCOUNTS.find((a) => a.id === selectedAcc) || ACCOUNTS[0];
-  const msg = `Hello Jovia Admin, I have completed my registration and payment for the ${p.name.toUpperCase()} plan.\n\nName: ${u.fullName}\nUsername: ${u.username}\nSelected Plan: ${p.name}\nAmount: ${money(p.amount)}\nPayment Channel: ${acc.method}\nAccount Number: ${acc.number}\nAccount Name: ${acc.name}\nReference: ${payRef}\n\nI am sending my payment proof for verification.`;
-  window.open("https://t.me/Verificationadmin0?text=" + encodeURIComponent(msg), "_blank");
+  const acc = ACCOUNTS.find((a) => a.id === selectedAcc);
+  const lines = [
+    `Hello Jovia Admin, I have completed my registration and payment for the ${p.name.toUpperCase()} plan.`,
+    "",
+    `Name: ${u.fullName}`,
+    `Username: ${u.username}`,
+    `Selected Plan: ${p.name}`,
+    `Amount: ${money(p.amount)}`,
+  ];
+  if (acc) {
+    lines.push(`Payment Channel: ${acc.method}`);
+    lines.push(`Account Number: ${acc.number}`);
+    lines.push(`Account Name: ${acc.name}`);
+  } else {
+    lines.push("Payment Channel: Moniepoint / PALMPAY");
+    ACCOUNTS.forEach((a) => lines.push(`${a.method}: ${a.number} (${a.name})`));
+  }
+  lines.push(`Reference: ${payRef}`);
+  lines.push(`Transaction/Reference ID: ${payRef}`);
+  lines.push("Payment Status: PENDING VERIFICATION");
+  lines.push("", "I am sending my payment proof for verification.");
+  window.open("https://t.me/Verificationadmin0?text=" + encodeURIComponent(lines.join("\n")), "_blank");
 }
